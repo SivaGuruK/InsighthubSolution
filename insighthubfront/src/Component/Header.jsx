@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -10,12 +11,12 @@ const Header = () => {
       <div className="container mx-auto flex justify-between items-center font-sans">
         <div className="text-customBlue text-32px font-bold">Logo</div>
         <div className="hidden md:flex space-x-4">
-          <a
-            href="#home"
+          <Link
+            to="/"
             className="text-customBlue hover:text-indigo-700 text-32px"
           >
             Home
-          </a>
+          </Link>
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -25,29 +26,29 @@ const Header = () => {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 font-sans">
-                <a
-                  href="#service1"
+                <Link
+                  to="/nirf"
                   className="block px-4 py-2 text-customBlue hover:bg-gray-100 hover:text-indigo-700 text-32px"
                 >
                   NIRF Consultation
-                </a>
-                <a
-                  href="#service2"
+                </Link>
+                <Link
+                  to="/startup"
                   className="block px-4 py-2 text-customBlue hover:bg-gray-100 hover:text-indigo-700 text-32px"
                 >
                   Startup Consultation
-                </a>
-                <a
-                  href="#service3"
+                </Link>
+                <Link
+                  to="/incubation"
                   className="block px-4 py-2 text-customBlue hover:bg-gray-100 hover:text-indigo-700 text-32px"
                 >
                   Incubation Setup
-                </a>
+                </Link>
               </div>
             )}
           </div>
           <a
-            href="#about"
+            href="/research"
             className="text-customBlue hover:text-indigo-700 text-32px"
           >
             Research & Insights

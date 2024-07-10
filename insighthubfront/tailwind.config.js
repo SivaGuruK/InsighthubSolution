@@ -1,5 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+// Import necessary modules
+const scrollbarHide = require("tailwind-scrollbar-hide");
+
+module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -10,8 +12,11 @@ export default {
       fontFamily: {
         sans: ['"IBM Plex Sans"', "sans-serif"],
       },
+      spacing: {
+        746: "746px",
+        427: "427px",
+      },
     },
   },
-  plugins: [],
+  plugins: [scrollbarHide],
 };
-
