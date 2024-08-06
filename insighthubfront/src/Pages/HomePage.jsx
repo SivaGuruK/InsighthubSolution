@@ -10,23 +10,23 @@ const HomePage = () => {
   const testimonials = [
     {
       id: 1,
-      image: nirfimg,
+      image: ceoimg,
       text: "InsightHub Solution helped our institution on NIRF ranking analysis and improvements. Their team of experts provided us with effective strategies and scalable solutions that were tailored to our unique needs. We are grateful for their guidance and support.",
       name: "Dr. G. Balamurugan",
       title: "CEO, ABC Pvt Ltd",
     },
     {
       id: 2,
-      image: startupimg,
-      text: "InsightHub Solution provided us with invaluable advice and resources to help our startup grow. Their team was incredibly supportive and knowledgeable, guiding us through each step of the process.",
-      name: "Ms. A. Priya",
+      image: ceoimg,
+      text: "InsightHub Solution helped our institution on NIRF ranking analysis and improvements. Their team of experts provided us with effective strategies and scalable solutions that were tailored to our unique needs. We are grateful for their guidance and support.",
+      name: "Dr. G. Balamurugan",
       title: "CEO, ABC Pvt Ltd",
     },
     {
       id: 3,
-      image: incubationimg,
-      text: "Working with InsightHub Solution has been a game-changer for our incubation program. Their tailored solutions and expert guidance have significantly boosted our operational efficiency.",
-      name: "Mr. K. Rajesh",
+      image: ceoimg,
+      text: "InsightHub Solution helped our institution on NIRF ranking analysis and improvements. Their team of experts provided us with effective strategies and scalable solutions that were tailored to our unique needs. We are grateful for their guidance and support.",
+      name: "Dr. G. Balamurugan",
       title: "CEO, ABC Pvt Ltd",
     },
   ];
@@ -221,17 +221,17 @@ const HomePage = () => {
       <div className="flex items-center justify-center space-x-4 mt-4">
         <div className="w-1/2">
           <div className="text-center">
-            <h1 className="text-xl  md:text-4xl text-left  text-customBlue font-sans mt-16 leading-none md:ml-48 md:mr-20">
+            <h1 className="text-xl  md:text-4xl text-left  text-customBlue font-sans mt-0 leading-none md:ml-10 md:mr-20">
               WHAT OUR
               <br />
               CUSTOMER SAY
             </h1>
           </div>
         </div>
-        <div className="w-1/2 mr-64">
+        <div className="w-[500px] mr-64">
           {/* Testimonial Image and Text */}
           <div className="mt-8 flex items-start space-x-4">
-            <div className="flex flex-col mt-16">
+            <div className="flex flex-col mt-0 -ml-32">
               <img
                 src={testimonials[activeTestimonial].image}
                 alt={`Testimonial ${activeTestimonial + 1}`}
@@ -246,12 +246,12 @@ const HomePage = () => {
                 {testimonials[activeTestimonial].title}
               </p>
             </div>
-            <p className="text-sm text-gray-700 mt-24">
+            <p className="text-sm text-black text-justify mt-6">
               {testimonials[activeTestimonial].text}
             </p>
           </div>
           {/* Dots */}
-          <div className="flex justify-center mt-0 space-x-2">
+          <div className="flex justify-center mt-3 space-x-2">
             {testimonials.map((testimonial, index) => (
               <button
                 key={testimonial.id}
@@ -264,90 +264,95 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto p-4">
-        <div className="max-w-4xl ml-0 ">
-          {/* Main Section */}
-          <div className="flex flex-wrap">
-            {/* Contact Us Section */}
-            <div className="w-full md:w-2/4 p-4 ml-0 ">
-              <form onSubmit={handleSubmit}>
-                <h2 className="text-xl md:text-4xl font-sans text-purpleBlue mt-10 md:mt-0">
-                  CONTACT US
-                </h2>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 ml-0 mr-80">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="Enter your name"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 ml-0">
-                    Your Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="Enter your phone number"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 ml-0">
-                    Your Email Address
-                  </label>
-                  <input
-                    type="email"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="Enter your email address"
-                  />
-                </div>
-                <div className="mb-6 ">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 ml-0">
-                    Your Message
-                  </label>
-                  <textarea
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32 resize-none"
-                    placeholder="Enter your message"
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline w-full md:w-auto"
-                >
-                  Submit
-                </button>
-              </form>
-            </div>
-            {/* About Us Section */}
-            <div className="w-full md:w-2/4 md:h-24  md:mr-0">
-              <div className="text-left">
-                <h2 className="text-xl md:text-4xl font-sans ml-32  text-purpleBlue mt-10 md:mt-0">
-                  ABOUT US
-                </h2>
-                <p className="text-justify text-black mt-4 ml-24">
-                  Discover your institution true standing in the National
-                  Institutional Ranking Framework (NIRF) with our expert
-                  consultancy services. We specialize in providing comprehensive
-                  analyses and insights into NIRF data, helping educational
-                  institutions gain a clear understanding of their current
-                  position and areas for improvement. Utilizing advanced data
-                  analytics techniques, we delve deep into the intricacies of
-                  NIRF metrics, offering valuable recommendations tailored to
-                  enhance performance across various parameters. Our consultancy
-                  services extend beyond mere analysis; we guide institutions
-                  through strategic initiatives aimed at elevating their NIRF
-                  rankings. From identifying key strengths to addressing
-                  potential weaknesses, we empower institutions to optimize
-                  their practices and policies, fostering continuous improvement
-                  and excellence in education. With our NIRF consultancy,
-                  institutions can embark on a data-driven journey toward
-                  achieving higher rankings and greater recognition on the
-                  national stage.
-                </p>
+      <div className="container mx-auto p-4 mb-0">
+        <div className="flex flex-wrap">
+          {/* Contact Us Section */}
+          <div className="w-full md:w-1/2 p-4">
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
+              <h2 className="text-xl md:text-4xl font-sans text-purpleBlue mt-10 mb-4 md:mt-0">
+                CONTACT US
+              </h2>
+              <div className="mb-4">
+                <label className="block text-black text-sm font-bold mb-2 -ml-[430px]">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                  placeholder="Enter your name"
+                  style={{ placeholderColor: "rgba(0, 0, 0, 0.4)" }}
+                />
               </div>
+              <div className="mb-4">
+                <label className="block text-black text-sm font-bold mb-2 -ml-[370px]">
+                  Your Phone Number
+                </label>
+                <input
+                  type="text"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                  placeholder="Enter your phone number"
+                  style={{ placeholderColor: "rgba(0, 0, 0, 0.4)" }}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-black text-sm font-bold mb-2 -ml-[370px]">
+                  Your Email Address
+                </label>
+                <input
+                  type="email"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                  placeholder="Enter your email address"
+                  style={{ placeholderColor: "rgba(0, 0, 0, 0.4)" }}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-black text-sm font-bold mb-2 -ml-[410px]">
+                  Your Message
+                </label>
+                <textarea
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline-xl focus:border-blue-500 h-32 resize-none"
+                  placeholder="Enter your message"
+                  style={{ placeholderColor: "rgba(0, 0, 0, 0.4)" }}
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline w-full md:w-auto"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+          {/* About Us Section */}
+          <div className="w-full md:w-1/2 p-4">
+            <div className="text-left">
+              <h2 className="text-xl md:text-4xl font-sans text-purpleBlue mt-10 ml-44 md:mt-0">
+                ABOUT US
+              </h2>
+              <p className="text-justify text-gray-700 mt-6 ml-10 mb-0">
+                Discover your institution true standing in the National
+                Institutional Ranking Framework (NIRF) with our expert
+                consultancy services. We specialize in providing comprehensive
+                analyses and insights into NIRF data, helping educational
+                institutions gain a clear understanding of their current
+                position and areas for improvement. Utilizing advanced data
+                analytics techniques, we delve deep into the intricacies of NIRF
+                metrics, offering valuable recommendations tailored to enhance
+                performance across various parameters. Our consultancy services
+                extend beyond mere analysis; we guide institutions through
+                strategic initiatives aimed at elevating their NIRF rankings.
+                From identifying key strengths to addressing potential
+                weaknesses, we empower institutions to optimize their practices
+                and policies, fostering continuous improvement and excellence in
+                education. With our NIRF consultancy, institutions can embark on
+                a data-driven journey toward achieving higher rankings and
+                greater recognition on the national stage.With our NIRF
+                consultancy, institutions can embark on a data-driven journey
+                toward achieving higher rankings and greater recognition on the
+                national stage.higher rankings and greater recognition on the
+                national stage.
+              </p>
             </div>
           </div>
         </div>

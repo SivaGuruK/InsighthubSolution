@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,6 +13,7 @@ import shared from "../Assests/shared.jpg";
 import infra from "../Assests/infra.jpeg";
 import seed from "../Assests/seed.jpeg";
 import access from "../Assests/invest.jpeg"
+import axios from "../api/axios";
 const images = [
   startupimg ,
   startupimg ,
@@ -20,7 +21,7 @@ const images = [
 ];
 
 const StartupConsult = () => {
-  const [imageIndex, setImageIndex] = useState(0);
+  
 
   const settings = {
     dots: true,
@@ -28,19 +29,25 @@ const StartupConsult = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    afterChange: (current) => setImageIndex(current),
   };
+  const [items, setitems] = useState("");
+  useEffect(() => {
+    const fetchdata = async () => {
+      const data = await axios.get("/startup");
+      setitems(data);
+    };
+    fetchdata();
+  }, []);
 
   return (
     <div className="bg-white flex flex-row justify-center w-full">
-      <div className="bg-white w-[1400px] h-[1579px] relative">
+      <div className="bg-white w-[1400px] h-[1270px] relative">
         <div className="absolute h-[90px] top-[12px] -left-[68px] [font-family:'IBM_Plex_Sans-Regular',Helvetica] font-normal text-[#2487ce] text-4xl tracking-[0] leading-[90px] whitespace-nowrap">
           STARTUP CONSULTATION
         </div>
-       
 
         {/* Our Offerings Section */}
-        <div className="absolute top-[500px] left-[100px] w-full">
+        <div className="absolute top-[500px] left-[100px] w-full mb-0">
           <div className="mb-8">
             <h2 className="text-4xl font-sans -ml-[1250px] text-customBlue mb-4">
               OUR OFFERINGS
@@ -119,7 +126,7 @@ const StartupConsult = () => {
           </div>
 
           {/* Register Now Button */}
-          <div className="mt-8">
+          <div className="mt-8 ">
             <button className="px-6 py-3 ml-0 mr-36 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
               Register Now
             </button>
@@ -162,6 +169,40 @@ const StartupConsult = () => {
               </div>
             ))}
           </Slider>
+        </div>
+        {/* Horizontal Scrollable Section */}
+        <div className="absolute top-[1090px] -ml-[140px] w-[1500px] h-[100px]">
+          <h2 className="text-4xl font-sans -ml-[850px] text-customBlue -mt-10 -mb-20">
+            INTERESTING BUSINESS CASES
+          </h2>
+          <div className="flex items-center">
+            <button className="text-5xl w-96 h-96 text-black font-bold">
+              {"<"}
+            </button>
+            <div className="flex overflow-x-auto space-x-4 ml-8 mr-8">
+               {items &&
+              items?.data.map((item) => (
+                <div
+                  key={item._id}
+                  className="w-[250px] h-[100px] bg-white border border-[#e0e0e0] rounded-lg shadow-button-shadow p-4"
+                >
+                  <img
+                    src={item.image}
+                    alt={`Item ${item.title}`}
+                    className="w-24 h-24 object-cover"
+                  />
+                  <h3 className="text-xl font-semibold text-black">
+                    {item.title}
+                  </h3>
+                  <p className="text-base text-gray-700">{item.description}</p>
+                    <button className="text-blue-500">Read More</button>
+                  </div>
+              ))}
+            </div>
+            <button className="text-5xl ml-2 w-96 h-96 text-black font-bold">
+              {">"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

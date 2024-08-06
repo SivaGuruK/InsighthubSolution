@@ -1,13 +1,13 @@
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import incubation from "../Assests/ai--1024x576 1.png";
-
+import axios from "../api/axios";
 const images = [incubation, incubation, incubation];
 
 const Incubation = () => {
-  const [imageIndex, setImageIndex] = useState(0);
+  const [ setImageIndex] = useState(0);
 
   const settings = {
     dots: true,
@@ -17,10 +17,18 @@ const Incubation = () => {
     slidesToScroll: 1,
     afterChange: (current) => setImageIndex(current),
   };
+    const [items, setitems] = useState("");
+    useEffect(() => {
+      const fetchdata = async () => {
+        const data = await axios.get("/incubation");
+        setitems(data);
+      };
+      fetchdata();
+    }, []);
 
   return (
     <div className="bg-white flex flex-row justify-center w-full">
-      <div className="bg-white w-[1400px] h-[1579px] relative">
+      <div className="bg-white w-[1400px] h-[1379px] relative">
         <div className="absolute h-[90px] top-[12px] -left-[68px] [font-family:'IBM_Plex_Sans-Regular',Helvetica] font-normal text-[#2487ce] text-4xl tracking-[0] leading-[90px] whitespace-nowrap">
           INCUBATION SETUP
         </div>
@@ -120,36 +128,37 @@ const Incubation = () => {
           </Slider>
         </div>
 
-        {/* New Horizontal Scrollable Section */}
-        <div className="absolute top-[1200px] w-full h-full">
+        {/* Horizontal Scrollable Section */}
+        <div className="absolute top-[1090px] -ml-[140px] w-[1500px] h-[10px]">
+          <h2 className="text-4xl font-sans -ml-[790px] text-customBlue mt-16 -mb-20">
+            INTERESTING BUSINESS CASES
+          </h2>
           <div className="flex items-center">
             <button className="text-5xl w-96 h-96 text-black font-bold">
-              {"<"}
+              &#9664;
             </button>
             <div className="flex overflow-x-auto space-x-4 ml-8 mr-8">
-              {images.map((image, index) => (
+              {items &&
+              items?.data.map((item) => (
                 <div
-                  key={index}
-                  className="bg-gray-200 p-4 flex items-center space-x-4"
+                  key={item._id}
+                  className="w-[250px] h-[100px] bg-white border border-[#e0e0e0] rounded-lg shadow-button-shadow p-4"
                 >
                   <img
-                    src={image}
-                    alt={`Item ${index}`}
+                    src={item.image}
+                    alt={`Item ${item.title}`}
                     className="w-24 h-24 object-cover"
                   />
-                  <div>
-                    <h3 className="text-xl font-bold mt-0">TITLEh</h3>
-                    <p className="text-sm">
-                      One line content here line content here line content here
-                      line content here.
-                    </p>
+                  <h3 className="text-xl font-semibold text-black">
+                    {item.title}
+                  </h3>
+                  <p className="text-base text-gray-700">{item.description}</p>
                     <button className="text-blue-500">Read More</button>
                   </div>
-                </div>
               ))}
             </div>
-            <button className="text-5xl w-96 h-96 text-black font-bold">
-              {">"}
+            <button className="text-5xl ml-2 w-96 h-96 text-black font-bold">
+              &#9654;
             </button>
           </div>
         </div>

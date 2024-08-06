@@ -9,6 +9,7 @@ import IncubationService from "./Pages/IncubationService";
 import Signup from "./Pages/SignupPage";
 import Signin from "./Pages/SigninPage";
 import ReslnsPage from "./Pages/ResInsPage";
+import AdminPage from "./Pages/AdminPage";
 
 function MainLayout() {
   const location = useLocation();
@@ -24,7 +25,8 @@ function MainLayout() {
         <Route path="/incubation" element={<IncubationService />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/research" element={<ReslnsPage/>}></Route>
+        <Route path="/research" element={<ReslnsPage />}></Route>
+        <Route path="/admin" element={<AdminPage/>}></Route>
       </Routes>
       {!noHeaderFooterPaths.includes(location.pathname) && <Footer />}
     </>

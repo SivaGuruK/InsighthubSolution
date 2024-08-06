@@ -20,32 +20,32 @@ const ResearchAndInsights = () => {
   const items = [
     {
       img: incubationimg,
-      title: "Sample Title 1",
+      title: "Sampleiouiyf",
       content: "Sample content goes here...",
     },
     {
       img: incubationimg,
-      title: "Sample Title 2",
+      title: "Sampjfg",
       content: "Sample content goes here...",
     },
     {
       img: incubationimg,
-      title: "Sample Title 3",
+      title: "Samphjgh",
       content: "Sample content goes here...",
     },
     {
       img: incubationimg,
-      title: "Sample Title 4",
+      title: "Sajghfg",
       content: "Sample content goes here...",
     },
     {
       img: incubationimg,
-      title: "Sample Title 5",
+      title: "Sapjh",
       content: "Sample content goes here...",
     },
     {
       img: incubationimg,
-      title: "Sample Title 6",
+      title: "Incubayui",
       content: "Sample content goes here...",
     },
   ];
@@ -59,7 +59,7 @@ const ResearchAndInsights = () => {
 
   const renderSection = (title, section) => (
     <div className="mb-8">
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
+      <h2 className="text-2xl mt-9 -ml-[1000px] text-customBlue font-sans mb-4">{title}</h2>
       <div className="relative flex items-center">
         <button
           className="absolute left-0 z-10 p-2 bg-white border rounded-full shadow"
@@ -102,7 +102,6 @@ const ResearchAndInsights = () => {
                 <div className="flex items-center">
                   <FaEye className="mr-1" /> 1234 views
                 </div>
-                <span>Total views: 5678</span>
               </div>
             </div>
           ))}
