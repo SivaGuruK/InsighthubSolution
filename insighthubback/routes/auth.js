@@ -32,13 +32,23 @@ router.post("/", async (req, res) => {
       return res.status(401).send({ message: "Invalid Email or Password" });
 
     const token = user.generateAuthToken();
-    const redirectUrl = user.isAdmin ? "/" : "/nirf"; // Determine redirect based on isAdmin
-
     res
       .status(200)
-      .send({ token, redirectUrl, message: "Logged in successfully" });
+      .send({ token, userId: user._id, message: "Logged in successfully" });
   } catch (error) {
     res.status(500).send({ message: "Internal server error" });
+  }
+});
+router.get("/users/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

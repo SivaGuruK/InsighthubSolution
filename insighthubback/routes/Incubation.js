@@ -1,8 +1,10 @@
-// Incubation route
+
 const express = require("express");
 const router = express.Router();
 const Incubation = require("../models/Incubation");
-const upload = require("../middleware/upload");
+const multer = require("multer");
+
+const upload = multer({ dest: "uploads/" });
 
 router.post("/", upload.single("incubationFile"), async (req, res) => {
   const { title, description } = req.body;
@@ -25,5 +27,16 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+router.get("/:id", async (req, res) => {
+  try {
+    const incubation = await Incubation.findById(req.params.id);
+    if (!incubation) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+    res.json(incubation);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 module.exports = router;

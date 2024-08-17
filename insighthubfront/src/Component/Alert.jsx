@@ -21,8 +21,6 @@ const Alert = ({ message, onClose, type = "error" }) => {
     )
   );
 };
-
-// Adding PropTypes to validate props
 Alert.propTypes = {
   message: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middleware/upload");
-const Blog = require("../models/Blog");
+const Blog = require("../models/Blogs");
 
 const fields = [
   { name: "nirfFile", maxCount: 1 },

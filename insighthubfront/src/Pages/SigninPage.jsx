@@ -1,43 +1,45 @@
 import { FaGoogle, FaFacebook, FaLinkedin, FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "../api/axios";
-import Alert from "../Component/Alert"; // Import the Alert component
+import Alert from "../Component/Alert"; 
 
 const Signin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+const [error, setError] = useState("");
+const [success, setSuccess] = useState("");
+const navigate = useNavigate();
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(""); // Add state for success messages
-  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({ ...formData, [name]: value });
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("/auth", formData);
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        setSuccess("Login successful! Redirecting...");
-        setTimeout(() => {
-          navigate(response.data.redirectUrl); // Redirect based on the response
-        }, 2000); // Delay for user to see the success message
-      }
-    } catch (error) {
-      console.error("There was an error signing in!", error);
-      setError(
-        error.response?.data?.message || "An unexpected error occurred."
-      );
-    }
-  };
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   try {
+     const response = await axios.post("/auth", formData);
+     if (response.status === 200) {
+       localStorage.setItem("token", response.data.token);
+       localStorage.setItem("userId", response.data.userId);
+       const intendedPath = localStorage.getItem("intendedPath");
 
+       if (intendedPath) {
+         navigate(intendedPath);
+         localStorage.removeItem("intendedPath");
+       } else {
+         navigate("/");
+       }
+     }
+   } catch (error) {
+     console.error("There was an error signing in!", error);
+     setError(error.response?.data?.message || "An unexpected error occurred.");
+   }
+ };
   const handleOAuth = async (provider) => {
     try {
       const response = await axios.get(`/auth/${provider}`);
@@ -77,7 +79,7 @@ const Signin = () => {
             />
           </div>
           <div className="text-[16px] text-black mb-6">or use your Account</div>
-          <form className="w-[500px]" onSubmit={handleSubmit}>
+          <form className="md:w-[500px] w-[250px]" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -121,21 +123,19 @@ const Signin = () => {
           </form>
         </div>
         <div className="flex flex-col items-center justify-center w-full md:w-1/2 text-white text-center p-8 bg-[#2487ce]">
-          <h1 className="text-5xl mb-8 font-sans">Come Join Us!</h1>
-          <p className="text-2xl mb-8">
+          <h1 className="md:text-5xl text-[25px] mb-8 font-sans">Come Join Us!</h1>
+          <p className="md:text-2xl text-[20px] mb-8">
             We are so excited to have you here. If you haven’t already, create
             an account to get access to our content.
           </p>
           <button
-            className="bg-white text-black rounded-full w-80 h-10"
+            className="bg-white text-black rounded-full md:w-80 w-64 h-10"
             onClick={() => navigate("/signup")}
           >
             Don’t have an Account? Sign Up!
           </button>
         </div>
       </div>
-
-      {/* Include Alert component here */}
       <Alert
         message={error || success}
         onClose={() => {

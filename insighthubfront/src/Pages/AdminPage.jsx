@@ -133,7 +133,7 @@ const AdminPage = () => {
     }
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append(`${prefix}File`, file);
     formData.append("title", title);
     formData.append("description", description);
 

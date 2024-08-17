@@ -1,29 +1,11 @@
 const mongoose = require("mongoose");
 
-const InteractionSchema = new mongoose.Schema({
-  blogId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Blog",
-    required: true,
-  },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  comments: {
-    type: Number,
-    default: 0,
-  },
-  shares: {
-    type: Number,
-    default: 0,
-  },
-  views: {
-    type: Number,
-    default: 0,
-  },
+const likeSchema = new mongoose.Schema({
+  itemId: { type: String, required: true },
+  userId: { type: String, required: true },
+  username: { type: String, required: true },
 });
 
-const Interactions = mongoose.model("Interactions", InteractionSchema);
+const Like = mongoose.model("Like", likeSchema);
 
-module.exports = Interactions;
+module.exports = Like;

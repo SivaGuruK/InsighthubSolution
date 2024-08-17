@@ -8,14 +8,15 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  isAdmin: { type: Boolean, default: false }, // Ensure the default is set to false
+  isAdmin: { type: Boolean, default: false },
+  profileImage: { type: String }, 
 });
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
-    { _id: this._id, isAdmin: this.isAdmin }, // Include isAdmin in the token
+    { _id: this._id, isAdmin: this.isAdmin },
     process.env.JWTPRIVATEKEY,
-    { expiresIn: "1h" } // Adjust expiration as needed
+    { expiresIn: "1h" }
   );
   return token;
 };

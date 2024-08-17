@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Startup = require("../models/Startup");
-const upload = require("../middleware/upload");
+const multer = require("multer");
+
+const upload = multer({ dest: "uploads/" });
 
 router.post("/", upload.single("startupFile"), async (req, res) => {
   const { title, description } = req.body;
@@ -15,7 +17,6 @@ router.post("/", upload.single("startupFile"), async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
 router.get("/", async (req, res) => {
   try {
     const startups = await Startup.find();
@@ -24,5 +25,16 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+router.get("/:id", async (req, res) => {
+  try {
+    const startup = await Startup.findById(req.params.id);
+    if (!startup) {
+      return res.status(404).json({ message: "Startup not found" });
+    }
+    res.json(startup);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 module.exports = router;

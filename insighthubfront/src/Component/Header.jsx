@@ -1,16 +1,32 @@
 import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
+import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import Sidebar from "./Profile";
+import Logo from "../Assests/LOGO.png";
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  const isItemDetailPage = /^\/[^/]+\/[^/]+$/.test(location.pathname);
+
+  const user = {
+    name: "John Doe",
+    email: "john@example.com",
+  };
 
   return (
     <nav>
       <div className="container mx-auto flex justify-between items-center font-sans">
-        <div className="text-customBlue text-32px font-bold">Logo</div>
-        <div className="hidden md:flex space-x-4">
+        <div>
+          <img
+            src={Logo}
+            alt="Logo"
+            className="md:w-40 md:h-16 md:-mt-3 md:-ml-7 w-24 h-10 -mt-4 -ml-1"
+          />
+        </div>
+        <div className="hidden md:flex space-x-4 md:-mt-5">
           <Link
             to="/"
             className="text-customBlue hover:text-indigo-700 text-32px"
@@ -53,18 +69,24 @@ const Header = () => {
           >
             Research & Insights
           </a>
+          {isItemDetailPage && (
+            <FaUser
+              className="text-customBlue -mt-2 w-10 h-8 hover:text-indigo-700 cursor-pointer"
+              onClick={() => setIsSidebarOpen(true)}
+            />
+          )}
         </div>
         <div className="md:hidden">
           <button
             onClick={() => setIsMobile(!isMobile)}
-            className="text-customBlue text-3xl  hover:text-indigo-700"
+            className="text-customBlue text-3xl hover:text-indigo-700 -ml-28 -mt-6"
           >
             {isMobile ? <FaTimes /> : <FaBars />}
           </button>
         </div>
       </div>
       {isMobile && (
-        <div className="md:hidden bg-white absolute top-0 left-0 w-full h-70% flex flex-col items-center justify-center space-y-4 font-sans">
+        <div className="md:hidden bg-white absolute top-0 -ml-20 w-full h-70% flex flex-col items-center justify-center space-y-4 font-sans">
           <button
             onClick={() => setIsMobile(false)}
             className="text-customBlue text-3xl absolute top-4 right-4 hover:text-indigo-700"
@@ -72,7 +94,7 @@ const Header = () => {
             <FaTimes />
           </button>
           <a
-            href="#home"
+            href="/"
             className="text-customBlue text-lg hover:text-indigo-700 text-32px"
             onClick={() => setIsMobile(false)}
           >
@@ -88,21 +110,21 @@ const Header = () => {
             {isDropdownOpen && (
               <div className="mt-2 w-48 bg-white rounded-md shadow-lg font-sans">
                 <a
-                  href="#service1"
+                  href="/nirf"
                   className="block px-4 py-2 text-customBlue hover:bg-gray-300 hover:text-indigo-700 text-32px"
                   onClick={() => setIsMobile(false)}
                 >
                   NIRF Consultation
                 </a>
                 <a
-                  href="#service2"
+                  href="/startup"
                   className="block px-4 py-2 text-customBlue hover:bg-gray-300 hover:text-indigo-700 text-32px"
                   onClick={() => setIsMobile(false)}
                 >
                   Startup Consultation
                 </a>
                 <a
-                  href="#service3"
+                  href="/incubation"
                   className="block px-4 py-2 text-customBlue hover:bg-gray-300 hover:text-indigo-700 text-32px"
                   onClick={() => setIsMobile(false)}
                 >
@@ -112,13 +134,16 @@ const Header = () => {
             )}
           </div>
           <a
-            href="#about"
+            href=""
             className="text-customBlue text-lg hover:text-indigo-700 text-32px"
             onClick={() => setIsMobile(false)}
           >
-            About
+            Research & Insights
           </a>
         </div>
+      )}
+      {isSidebarOpen && (
+        <Sidebar onClose={() => setIsSidebarOpen(false)} user={user} />
       )}
     </nav>
   );

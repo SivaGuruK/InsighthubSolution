@@ -2,7 +2,7 @@ import { FaGoogle, FaFacebook, FaLinkedin, FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "../api/axios";
-import Alert from "../Component/Alert"; // Import the Alert component
+import Alert from "../Component/Alert";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const [alert, setAlert] = useState({ message: "", type: "" }); // State for alerts
+  const [alert, setAlert] = useState({ message: "", type: "" }); 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -45,7 +45,7 @@ const Signup = () => {
 
       if (response.status === 201) {
         setAlert({ message: "User registered successfully.", type: "success" });
-        setTimeout(() => navigate("/"), 2000); // Redirect after 2 seconds to show the alert
+        setTimeout(() => navigate("/"), 2000);
       }
     } catch (error) {
       console.error("There was an error signing up!", error);
@@ -76,9 +76,9 @@ const Signup = () => {
         <FaArrowLeft />
       </button>
       <div className="bg-[#2487ce] flex flex-row justify-center w-full h-screen">
-        <div className="flex flex-col items-center justify-center w-full md:w-[50%] h-full text-white">
-          <div className="text-5xl font-sans mb-8">Come Join Us!</div>
-          <p className="text-2xl text-center mb-8">
+        <div className="flex flex-col items-center justify-center w-full md:w-[50%] md:mt-0 mt-[500px] h-full text-white">
+          <div className="md:text-5xl text-[25px] whitespace-nowrap font-sans mb-8 md:mt-0 mt-[700px] md:text-white text-customBlue">Come Join Us!</div>
+          <p className="md:text-2xl text-[20px] text-center mb-8 text-customBlue whitespace-pre-line md:text-white">
             We are so excited to have you here. If you have not already, create
             an account to get access to our content.
           </p>
@@ -90,7 +90,7 @@ const Signup = () => {
           </button>
         </div>
 
-        <div className="hidden md:flex md:flex-col md:items-center md:justify-center md:w-[50%] md:bg-white shadow-2xl">
+        <div className=" md:flex md:flex-col md:items-center md:justify-center md:w-[50%] md:bg-white shadow-2xl">
           <h1 className="text-[#0077B5] text-2xl mt-6">
             Welcome Back! Register Here
           </h1>
@@ -199,7 +199,6 @@ const Signup = () => {
         </div>
       </div>
 
-      {/* Alert Component */}
       {alert.message && (
         <Alert
           message={alert.message}

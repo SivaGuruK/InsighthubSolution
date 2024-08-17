@@ -6,8 +6,6 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 require("dotenv").config();
-
-// Configure passport strategies
 passport.use(
   new GoogleStrategy(
     {
@@ -17,6 +15,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
+        console.log("Google Profile:", profile);
         const user = await User.findOne({ email: profile.emails[0].value });
         if (user) return cb(null, user);
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
@@ -44,6 +43,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
+        console.log("LinkedIn Profile:", profile);
         const user = await User.findOne({ email: profile.emails[0].value });
         if (user) return cb(null, user);
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
@@ -68,10 +68,11 @@ passport.use(
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: "/auth/facebook/callback",
-      profileFields: ["id", "emails", "name"], // Ensuring profile has emails field
+      profileFields: ["id", "emails", "name"],  
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
+        console.log("Facebook Profile:", profile);
         const email = profile.emails ? profile.emails[0].value : null;
         if (!email) {
           return cb(
@@ -95,8 +96,6 @@ passport.use(
     }
   )
 );
-
-// Define routes
 router.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
@@ -105,7 +104,10 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
-    res.redirect("/");
+    res.json({
+      message: "Successfully authenticated with Google",
+      user: req.user,
+    });
   }
 );
 
@@ -119,7 +121,10 @@ router.get(
   "/auth/linkedin/callback",
   passport.authenticate("linkedin", { failureRedirect: "/login" }),
   (req, res) => {
-    res.redirect("/");
+    res.json({
+      message: "Successfully authenticated with LinkedIn",
+      user: req.user,
+    });
   }
 );
 
@@ -131,30 +136,37 @@ router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", { failureRedirect: "/login" }),
   (req, res) => {
-    res.redirect("/");
+    res.json({
+      message: "Successfully authenticated with Facebook",
+      user: req.user,
+    });
   }
 );
 
 router.post("/", async (req, res) => {
   try {
+    console.log("Request Body:", req.body);
     const { error } = validate(req.body);
     if (error)
-      return res.status(400).send({ message: error.details[0].message });
+      return res.status(400).json({ message: error.details[0].message });
 
     const user = await User.findOne({ email: req.body.email });
     if (user)
       return res
         .status(409)
-        .send({ message: "User with given email already exists" });
+        .json({ message: "User with given email already exists" });
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
-    await new User({ ...req.body, password: hashPassword }).save();
-    res.status(201).send({ message: "User created successfully" });
+    const newUser = new User({ ...req.body, password: hashPassword });
+    await newUser.save();
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: newUser });
   } catch (error) {
     console.error("Error creating user:", error);
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

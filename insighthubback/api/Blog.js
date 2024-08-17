@@ -28,8 +28,6 @@ router.post("/upload", upload.fields(fields), (req, res) => {
   try {
     const files = req.files;
     const fields = req.body;
-
-    // Process the uploaded files and form fields here
     console.log(files);
     console.log(fields);
 

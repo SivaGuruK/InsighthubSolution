@@ -10,6 +10,8 @@ import Signup from "./Pages/SignupPage";
 import Signin from "./Pages/SigninPage";
 import ReslnsPage from "./Pages/ResInsPage";
 import AdminPage from "./Pages/AdminPage";
+import ItemDetail from "./Pages/ItemDetail";
+import ProfileComp from "./Component/Profile";
 
 function MainLayout() {
   const location = useLocation();
@@ -26,7 +28,9 @@ function MainLayout() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/research" element={<ReslnsPage />}></Route>
-        <Route path="/admin" element={<AdminPage/>}></Route>
+        <Route path="/admin" element={<AdminPage />}></Route>
+        <Route path="/:type/:id" element={<ItemDetail />} />
+        <Route path="/profile" element={<ProfileComp/>}/>
       </Routes>
       {!noHeaderFooterPaths.includes(location.pathname) && <Footer />}
     </>

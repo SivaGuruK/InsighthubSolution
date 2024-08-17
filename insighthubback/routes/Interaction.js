@@ -1,50 +1,46 @@
 const express = require("express");
-const Interaction = require("../models/Interactions");
-
 const router = express.Router();
+const Like = require("../models/Interactions");
 
-// Create or update interaction for a blog post
-router.post("/", async (req, res) => {
-  const { blogId, type } = req.body;
-
+router.post("/:itemId", async (req, res) => {
   try {
-    const interaction = await Interaction.findOne({ blogId });
-
-    if (interaction) {
-      interaction[type]++;
-      await interaction.save();
-      res.status(200).json(interaction);
+    const { itemId } = req.params;
+    const { userId, username } = req.body;
+    const existingLike = await Like.findOne({ itemId, userId });
+    if (existingLike) {
+      res.status(400).send({ message: "You already liked this item" });
     } else {
-      const newInteraction = new Interaction({
-        blogId,
-        likes: type === "likes" ? 1 : 0,
-        comments: type === "comments" ? 1 : 0,
-        shares: type === "shares" ? 1 : 0,
-        views: type === "views" ? 1 : 0,
-      });
-      await newInteraction.save();
-      res.status(201).json(newInteraction);
+      const newLike = new Like({ itemId, userId, username });
+      await newLike.save();
+      res.send({ message: "Like added successfully" });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).send({ message: "Error adding like" });
   }
 });
 
-// Get interactions for a blog post
-router.get("/:blogId", async (req, res) => {
-  const { blogId } = req.params;
-
+router.delete("/:itemId", async (req, res) => {
   try {
-    const interaction = await Interaction.findOne({ blogId });
-    if (interaction) {
-      res.status(200).json(interaction);
+    const { itemId } = req.params;
+    const { userId } = req.body;
+    const existingLike = await Like.findOneAndDelete({ itemId, userId });
+    if (existingLike) {
+      res.send({ message: "Like removed successfully" });
     } else {
-      res
-        .status(404)
-        .json({ message: "No interactions found for this blog post" });
+      res.status(400).send({ message: "Like not found" });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).send({ message: "Error removing like" });
+  }
+});
+
+router.get("/:itemId", async (req, res) => {
+  try {
+    const { itemId } = req.params;
+    const likes = await Like.find({ itemId });
+    res.send(likes);
+  } catch (error) {
+    res.status(500).send({ message: "Error getting likes" });
   }
 });
 
